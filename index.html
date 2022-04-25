@@ -17,7 +17,7 @@ init: function () {
 var elem = document.documentElement;
 var marker = document.querySelector("#marker");
 var fullbutton = document.querySelector("#fullscreen");
-
+var button = document.querySelector("#mutebutton");
 var Video_0 = document.querySelector("#Video_Asset_0");
 marker.addEventListener("markerFound", function (evt) {
 markerFound = 1;
@@ -27,7 +27,18 @@ marker.addEventListener("markerLost", function (evt) {
 markerFound = 0;
 Video_0.pause();
 });
-
+marker.addEventListener("markerLost", function (evt) {
+markerFound = 0;
+Video_0.pause();
+});
+button.addEventListener("click", function(evt){
+console.log("button clicked")
+if(Video_0.muted==true){
+button.innerHTML="Mudo";
+Video_0.muted=false;
+}else{
+button.innerHTML="Ativar Som";
+Video_0.muted=true;
 }
 });
 
@@ -93,7 +104,11 @@ if (markerFound == 1) {
 <!-- BEGIN: Middle HTML -->
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 
-       
+       <div style='position: absolute; bottom: 10px; right: 30px; width:100%; text-align: center; z-index: 1;'>      
+            <button id="mutebutton" style='position: absolute; bottom: 10px'>
+                Ativar Som
+            </button>
+        </div>
 
         <div style='position: absolute; bottom: 5px; left: 30px; width:100%; text-align: right; z-index: 1;'>
             <input type="image" id="fullscreen" src="fullscreen.png" style='position: absolute; bottom: 0px; right: 35px;'>
@@ -107,7 +122,7 @@ if (markerFound == 1) {
 
 <!-- BEGIN: Unity Compiled Assets -->
 <a-assets>
-<video id="Video_Asset_0" autoplay="false" loop crossorigin="anonymous" src="videos/celia.mp4" webkit-playsinline playsinline controls ></video>
+<video id="Video_Asset_0" autoplay="false" loop crossorigin="anonymous" src="videos/celia.mp4" webkit-playsinline playsinline controls muted></video>
 </a-assets>
 <!-- END: Unity Compiled Assets -->
 <!-- BEGIN: Add Image Target (marker) -->
